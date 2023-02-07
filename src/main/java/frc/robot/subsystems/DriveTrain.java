@@ -8,38 +8,81 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
-import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveTrain extends SubsystemBase {
-  
-  CANSparkMaxLowLevel m_rearRight = new CANSparkMax(1, MotorType.kBrushless);
-  CANSparkMaxLowLevel m_frontRight = new CANSparkMax(2, MotorType.kBrushless);
-    MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
 
-  CANSparkMaxLowLevel m_rearLeft = new CANSparkMax(5, MotorType.kBrushless);
-  CANSparkMaxLowLevel m_frontLeft = new CANSparkMax(6, MotorType.kBrushless);;
-    MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+  CANSparkMax m_rearRight = new CANSparkMax(1, MotorType.kBrushless);
+  CANSparkMax m_frontRight = new CANSparkMax(2, MotorType.kBrushless);
+  MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
 
-    DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
-  
+  CANSparkMax m_rearLeft = new CANSparkMax(5, MotorType.kBrushless);
+  CANSparkMax m_frontLeft = new CANSparkMax(6, MotorType.kBrushless);;
+  MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
+
+  DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+
   public DriveTrain() {
-  
+
     m_right.setInverted(true);
   }
 
+  double speed = 0;
+
   public void driveWithJoystick(Joystick joystick) {
     double throttle = -joystick.getThrottle();
-    if (throttle < 0.5) {
-        m_drive.arcadeDrive(-joystick.getY() * 0.6, joystick.getTwist() * 0.5);
+    if (joystick.getY() > 0.1 || joystick.getY() < -0.1) {
+      speed = joystick.getY();
     } else {
-        m_drive.arcadeDrive(-joystick.getY() * 0.80, joystick.getTwist() * 0.65);
+      speed = speed * .99;
+    }
+
+    if (throttle < 0.5) {
+        m_drive.arcadeDrive(-joystick.getY() * 0.5, joystick.getTwist() * 0.4);
+    } else {
+        m_drive.arcadeDrive(-joystick.getY() * 0.65, joystick.getTwist() * 0.5);
     }
   }
-}
+ 
 
-  
+  //double oldDesired = 0;
+  //double currentThrottle = 0;
+ // double step = 0;
+
+ // public void driveTest(XboxController xController) {
+
+  //  if (xController.getLeftY() > 0.1 || xController.getLeftY() < -0.1) {
+   //   speed = xController.getLeftY();
+   // } else {
+   //   speed = speed * .99;
+  //  }
+
+   // m_drive.arcadeDrive(-speed * 0.5, xController.getLeftX() * 0.4);
+
+   // double desiredThrottle =  xController.getLeftY();
+    
+   // if (oldDesired != desiredThrottle) {
+      // Recalc diff/error
+   //   oldDesired = desiredThrottle;
+   //   double diff = desiredThrottle - currentThrottle;
+   //   step = diff * 1/50;
+   // }
+
+   // if (desiredThrottle - currentThrottle != 0) {
+   //   currentThrottle += step;
+   // }
+
+    //SmartDashboard.putNumber("Current throttle", currentThrottle);
+    //SmartDashboard.putNumber("Desired throttle", desiredThrottle);
+   // SmartDashboard.putNumber("Old Desired throttle", oldDesired);
+   // SmartDashboard.putNumber("Step", step);
+    //m_drive.arcadeDrive(-currentThrottle * 0.5, xController.getLeftX() * 0.4);
+ // }
+}
