@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Robot extends TimedRobot {
   private final Joystick m_stick = new Joystick(0);
   public final DriveTrain m_driveTrain = new DriveTrain();
+  private final XboxController m_controller = new XboxController(1);
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -36,7 +38,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    m_driveTrain.driveWithJoystick(m_stick);
+    m_driveTrain.driveWithXController(m_controller);
     
   }
 
