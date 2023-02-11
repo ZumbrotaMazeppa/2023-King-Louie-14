@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Grippy;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
   public final DriveTrain m_driveTrain = new DriveTrain();
   private final XboxController m_controller = new XboxController(1);
   private final Arm m_arm = new Arm();
+  private final Grippy m_grip = new Grippy();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -88,8 +90,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_driveTrain.driveWithXController(m_controller);
-    m_arm.ArmMovement(m_stick);
+    m_driveTrain.driveWithJoystick(m_stick);
+    m_arm.ArmMovement(m_controller);
+    //m_grip.GrippyMovement(m_controller);
   }
 
   /** This function is called once when the robot is disabled. */

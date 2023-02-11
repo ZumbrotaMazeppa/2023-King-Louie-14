@@ -38,14 +38,14 @@ public class DriveTrain extends SubsystemBase {
 
   // We would like use the Logitech controller for driving
   // Use joystick for arm
-  public void driveWithXController(XboxController XController) {
-    if (XController.getLeftY() > 0.1 || XController.getLeftY() < -0.1) {
-      speed = XController.getLeftY();
+  public void driveWithJoystick(Joystick joystick) {
+    if (joystick.getY() > 0.1 || joystick.getY() < -0.1) {
+      speed = joystick.getY();
     } else {
       speed = speed * .99;
     }
 
-    m_drive.arcadeDrive(-XController.getLeftY() * 0.5, XController.getLeftX() * 0.4);
+    m_drive.arcadeDrive(-joystick.getY() * 0.5, joystick.getTwist() * 0.4);
 
   }
  
@@ -59,15 +59,15 @@ public class DriveTrain extends SubsystemBase {
 
  // public void driveTest(XboxController xController) {
 
-  //  if (xController.getLeftY() > 0.1 || xController.getLeftY() < -0.1) {
-   //   speed = xController.getLeftY();
+  //  if (joystick.getY() > 0.1 || joystick.getY() < -0.1) {
+   //   speed = joystick.getY();
    // } else {
    //   speed = speed * .99;
   //  }
 
    // m_drive.arcadeDrive(-speed * 0.5, xController.getLeftX() * 0.4);
 
-   // double desiredThrottle =  xController.getLeftY();
+   // double desiredThrottle =  joystick.getY();
     
    // if (oldDesired != desiredThrottle) {
       // Recalc diff/error
