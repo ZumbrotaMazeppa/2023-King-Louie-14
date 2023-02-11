@@ -49,6 +49,9 @@ public class DriveTrain extends SubsystemBase {
 
   }
  
+  public void driveAuton() {
+
+  }
 
   //double oldDesired = 0;
   //double currentThrottle = 0;

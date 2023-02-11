@@ -4,17 +4,26 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 // arm code here
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
- // Use joystick for arm
-public class Arm extends SubsystemBase{
-    WPI_VictorSPX m_Winch = new WPI_VictorSPX(3);
+public class Arm extends SubsystemBase {
+    WPI_TalonSRX m_Winch = new WPI_TalonSRX(3);
+    DigitalInput limitSwitch = new DigitalInput(0);
 
+    public Arm() {
+
+    }
+
+    // Use joystick for arm
     public void ArmMovement(Joystick joystick) {
-    m_Winch.set(joystick.getY());
+        if (limitSwitch.get()) { // Returns true if button is pressed
+            m_Winch.set(0);
+        } else {
+            m_Winch.set(joystick.getY());
+        }
     }
 }
