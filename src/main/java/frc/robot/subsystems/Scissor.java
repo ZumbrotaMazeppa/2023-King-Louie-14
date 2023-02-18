@@ -11,21 +11,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 // arm code here
 
-public class Arm extends SubsystemBase {
-    WPI_TalonSRX m_Winch = new WPI_TalonSRX(3);
+public class Scissor extends SubsystemBase {
+    WPI_TalonSRX m_Scissor = new WPI_TalonSRX(3);
     DigitalInput limitSwitch = new DigitalInput(0);
     DigitalInput limitSwitch2 = new DigitalInput(1);
 
-    public Arm() {
+    public Scissor() {
 
     }
 
     // Use joystick for arm
-    public void ArmMovement(XboxController xController) {
+    public void ScissorMovement(XboxController xController) {
         if (limitSwitch.get() || limitSwitch2.get()) { // Returns true if button is pressed
-            m_Winch.set(0);
+            m_Scissor.set(0);
         } else {
-            m_Winch.set(xController.getLeftY() * 1.5f); //This was Malcolm & Jimmy testing how to slow things. Don't Delete this (*1f)
+            m_Scissor.set(xController.getRightX() * .25f); //This was Malcolm & Jimmy testing how to slow things. Don't Delete this (*1f)
         }
     }
 }
