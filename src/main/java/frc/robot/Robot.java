@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
   private final XboxController m_controller = new XboxController(1);
   private final Arm m_arm = new Arm();
   private final Grippy m_grip = new Grippy();
+  // private final Scissor m_scissor = new Scissor();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -90,9 +91,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_driveTrain.driveWithJoystick(m_stick);
+    m_driveTrain.driveTest(m_stick);
+    //m_driveTrain.driveWithJoystick(m_stick);
     m_arm.ArmMovement(m_controller);
     m_grip.GrippyMovement(m_controller);
+    //m_scissor.ScissorMovement(m_controller);
   }
 
   /** This function is called once when the robot is disabled. */
