@@ -25,11 +25,23 @@ public class DriveTrain extends SubsystemBase {
 
   DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
 
+  double speed = 0;
+  double oldDesired = 0;
+  double currentThrottle = 0;
+  double step = 0;
+
+
   public DriveTrain() {
     m_right.setInverted(true);
   }
 
-  double speed = 0;
+  public void initDrive() {
+    speed = 0;
+    oldDesired = 0;
+    currentThrottle = 0;
+    step = 0;
+  }
+
 
   // We would like use the Logitech controller for driving
   public void driveWithJoystick(Joystick joystick) {
@@ -61,10 +73,6 @@ public class DriveTrain extends SubsystemBase {
     // One concern: is driving on the charging station consistent?
     // What happens if our wheels slip?
   }
-
-  double oldDesired = 0;
-  double currentThrottle = 0;
-  double step = 0;
 
   public void driveTest(Joystick joystick) {
 

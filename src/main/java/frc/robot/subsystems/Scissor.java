@@ -10,9 +10,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Scissor extends SubsystemBase {
-    WPI_TalonSRX m_Scissor = new WPI_TalonSRX(4);
-    DigitalInput limitSwitch = new DigitalInput(0);
-    DigitalInput limitSwitch2 = new DigitalInput(1);
+    WPI_TalonSRX m_Scissor = new WPI_TalonSRX(3);
+
+    DigitalInput limitSwitch = new DigitalInput(2);
+    DigitalInput limitSwitch2 = new DigitalInput(3);
 
     public Scissor() {
 
@@ -20,10 +21,7 @@ public class Scissor extends SubsystemBase {
 
     // Use xbox controller's right stick to move scissor
     public void ScissorMovement(XboxController xController) {
-        if (limitSwitch.get() || limitSwitch2.get()) { // Returns true if button is pressed
-            m_Scissor.set(0);
-        } else {
-            m_Scissor.set(xController.getRightX() * .25f); //This was Malcolm & Jimmy testing how to slow things. Don't Delete this (*1f)
-        }
+        m_Scissor.set(xController.getRightX() * .25f); //This was Malcolm & Jimmy testing how to slow things. Don't Delete this (*1f)
+        
     }
 }

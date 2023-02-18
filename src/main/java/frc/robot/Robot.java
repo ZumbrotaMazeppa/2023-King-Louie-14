@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Grippy;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Scissor;
+import frc.robot.subsystems.Winch;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -22,11 +23,11 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Robot extends TimedRobot {
   private final Joystick m_stick = new Joystick(0);
-  public final DriveTrain m_driveTrain = new DriveTrain();
   private final XboxController m_controller = new XboxController(1);
-  private final Arm m_arm = new Arm();
+  private final DriveTrain m_driveTrain = new DriveTrain();
+  private final Winch m_winch = new Winch();
+  private final Scissor m_scissor = new Scissor();
   private final Grippy m_grip = new Grippy();
-  // private final Scissor m_scissor = new Scissor();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -35,7 +36,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
+    m_driveTrain.initDrive();
   }
 
   /**
@@ -50,7 +51,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    
+
   }
 
   /**
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    m_driveTrain.initDrive();
     // Set encoders to 0
 
   }
@@ -79,23 +81,24 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // Probably want to calculate and perform movements here 
+    // Probably want to calculate and perform movements here
     m_driveTrain.driveAuton();
   }
 
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    m_driveTrain.initDrive();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     m_driveTrain.driveTest(m_stick);
-    //m_driveTrain.driveWithJoystick(m_stick);
-    m_arm.ArmMovement(m_controller);
+    // m_driveTrain.driveWithJoystick(m_stick);
+    m_winch.WinchMovement(m_controller);
     m_grip.GrippyMovement(m_controller);
-    //m_scissor.ScissorMovement(m_controller);
+    m_scissor.ScissorMovement(m_controller);
   }
 
   /** This function is called once when the robot is disabled. */
