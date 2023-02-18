@@ -48,42 +48,42 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(-joystick.getY() * 0.5, joystick.getTwist() * 0.4);
 
   }
- 
+
   public void driveAuton() {
 
   }
 
-  //double oldDesired = 0;
-  //double currentThrottle = 0;
- // double step = 0;
+  double oldDesired = 0;
+  double currentThrottle = 0;
+  double step = 0;
 
- // public void driveTest(XboxController xController) {
+  public void driveTest(Joystick joystick) {
 
-  //  if (joystick.getY() > 0.1 || joystick.getY() < -0.1) {
-   //   speed = joystick.getY();
-   // } else {
-   //   speed = speed * .99;
-  //  }
+    if (joystick.getY() > 0.1 || joystick.getY() < -0.1) {
+      speed = joystick.getY();
+    } else {
+      speed = speed * .99;
+    }
 
-   // m_drive.arcadeDrive(-speed * 0.5, xController.getLeftX() * 0.4);
+    m_drive.arcadeDrive(-speed * 0.5, joystick.getTwist() * 0.4);
 
-   // double desiredThrottle =  joystick.getY();
-    
-   // if (oldDesired != desiredThrottle) {
+    double desiredThrottle = joystick.getY();
+
+    if (oldDesired != desiredThrottle) {
       // Recalc diff/error
-   //   oldDesired = desiredThrottle;
-   //   double diff = desiredThrottle - currentThrottle;
-   //   step = diff * 1/50;
-   // }
+      oldDesired = desiredThrottle;
+      double diff = desiredThrottle - currentThrottle;
+      step = diff / 8;
+    }
 
-   // if (desiredThrottle - currentThrottle != 0) {
-   //   currentThrottle += step;
-   // }
+    if (Math.abs(desiredThrottle - currentThrottle) > 0.05) {
+      currentThrottle += step;
+    }
 
-    //SmartDashboard.putNumber("Current throttle", currentThrottle);
-    //SmartDashboard.putNumber("Desired throttle", desiredThrottle);
-   // SmartDashboard.putNumber("Old Desired throttle", oldDesired);
-   // SmartDashboard.putNumber("Step", step);
-    //m_drive.arcadeDrive(-currentThrottle * 0.5, xController.getLeftX() * 0.4);
- // }
+    SmartDashboard.putNumber("Current throttle", currentThrottle);
+    SmartDashboard.putNumber("Desired throttle", desiredThrottle);
+    SmartDashboard.putNumber("Old Desired throttle", oldDesired);
+    SmartDashboard.putNumber("Step", step);
+    m_drive.arcadeDrive(-currentThrottle * 0.5, joystick.getTwist() * 0.4);
+  }
 }

@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     m_driveTrain.driveWithJoystick(m_stick);
     m_arm.ArmMovement(m_controller);
-    //m_grip.GrippyMovement(m_controller);
+    m_grip.GrippyMovement(m_controller);
   }
 
   /** This function is called once when the robot is disabled. */
