@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
@@ -55,11 +56,29 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
+  public void autonInit() {
+
+    initDrive();
+
+    RelativeEncoder encoder = m_rearLeft.getEncoder();
+    encoder.setPosition(0);
+
+    encoder = m_rearRight.getEncoder();
+    encoder.setPosition(0);
+
+    encoder = m_frontRight.getEncoder();
+    encoder.setPosition(0);
+
+    encoder = m_frontRight.getEncoder();
+    encoder.setPosition(0);
+
+  }
   public void driveAuton() {
 
     DriverStation.getAlliance(); // Red, Blue, or Invalid
     DriverStation.getLocation(); // 1, 2, or 3
 
+    
     // We can use the DriverStation class to find out what Alliance and Station
     // we are at by the Field Management System (FMS). We can then decide what
     // action we want to take based on our location.

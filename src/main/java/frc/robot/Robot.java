@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_driveTrain.initDrive();
+    m_driveTrain.autonInit();
     // Set encoders to 0
 
   }
