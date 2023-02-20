@@ -119,11 +119,6 @@ public class DriveTrain extends SubsystemBase {
       currentThrottle += step;
     }
 
-    SmartDashboard.putNumber("Current throttle", currentThrottle);
-    SmartDashboard.putNumber("Desired throttle", desiredThrottle);
-    SmartDashboard.putNumber("Old Desired throttle", oldDesired);
-    SmartDashboard.putNumber("Step", step);
-
     if (joystick.getThrottle() < 0) { // Put throttle lever up to use old method
       m_drive.arcadeDrive(-speed * 0.5, joystick.getTwist() * 0.4);
     } else { // Put throttle lever down to use new method

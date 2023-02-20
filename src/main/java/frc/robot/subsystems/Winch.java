@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 // arm code here
 
 public class Winch extends SubsystemBase {
-    WPI_TalonSRX m_Winch = new WPI_TalonSRX(4);
+    WPI_TalonSRX m_Winch = new WPI_TalonSRX(3);
     DigitalInput limitSwitch = new DigitalInput(0);
     DigitalInput limitSwitch2 = new DigitalInput(1);
 
