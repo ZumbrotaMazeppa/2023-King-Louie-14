@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-// MOTOR CONTROLLER ONLY WORKS ONE DIRECTION, NEED TO SWAP
-//Ayden Changed things plz dont hurt me
 public class Grippy extends SubsystemBase {
     DoubleSolenoid grippysDoubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
 
@@ -38,5 +36,16 @@ public class Grippy extends SubsystemBase {
         } else {
             grippysDoubleSolenoid.set(DoubleSolenoid.Value.kOff);
         }
+    }
+
+    public void objectdropauton() {
+        grippysDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+
+        try {
+            Thread.sleep(1500);
+        } catch (Exception e) {
+        }
+
+        grippysDoubleSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 }
