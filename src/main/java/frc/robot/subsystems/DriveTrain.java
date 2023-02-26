@@ -49,6 +49,20 @@ public class DriveTrain extends SubsystemBase {
     encoder.setPosition(0);
   }
 
+  public void printEncoders(){
+    RelativeEncoder encoder = m_rearLeft.getEncoder();
+    SmartDashboard.putNumber("Rear Left", encoder.getPosition());
+
+    encoder = m_rearRight.getEncoder();
+    SmartDashboard.putNumber("Rear Right", encoder.getPosition());
+
+    encoder = m_frontRight.getEncoder();
+    SmartDashboard.putNumber("Front Right", encoder.getPosition());
+
+    encoder = m_frontLeft.getEncoder();
+    SmartDashboard.putNumber("Front Left", encoder.getPosition());
+  }
+
   public void initDrive() {
     speed = 0;
     oldDesired = 0;
@@ -136,19 +150,16 @@ public class DriveTrain extends SubsystemBase {
     DriverStation.getAlliance(); // Red, Blue, or Invalid
     DriverStation.getLocation(); // 1, 2, or 3
 
+    resetEncoders();
+    printEncoders();
+
+    try {
+      Thread.sleep(5000);
+    } catch (Exception e) {}
+
     driveAndTurnWithAuton(0, 0.4, 1000);
+    printEncoders();
 
-    RelativeEncoder encoder = m_rearLeft.getEncoder();
-    SmartDashboard.putNumber("Rear Left", encoder.getPosition());
-
-    encoder = m_rearRight.getEncoder();
-    SmartDashboard.putNumber("Rear Right", encoder.getPosition());
-
-    encoder = m_frontRight.getEncoder();
-    SmartDashboard.putNumber("Front Right", encoder.getPosition());
-
-    encoder = m_frontLeft.getEncoder();
-    SmartDashboard.putNumber("Front Left", encoder.getPosition());
 
     /*
      * if (DriverStation.getAlliance()== DriverStation.Alliance.Red &&
@@ -179,12 +190,6 @@ public class DriveTrain extends SubsystemBase {
       m_drive.arcadeDrive(speed, turn);
     }
     m_drive.arcadeDrive(0, 0);
-
-    /*
-     * m_drive.arcadeDrive(speed, 0);
-     * long hittime = System.currentTimeMillis() + drivetime;
-     * while(System.currentTimeMillis() < hittime);
-     */
   }
 
   public void driveTest(Joystick joystick) {

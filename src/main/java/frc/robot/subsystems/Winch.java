@@ -19,23 +19,29 @@ public class Winch extends SubsystemBase {
 
     }
 
-    public void winchAuton(boolean down, long lifttime){
-    
-    if (down == false) {
-      long targettime = System.currentTimeMillis() +  lifttime;
-    while(System.currentTimeMillis() < targettime) {
-     m_Winch.set(1);
-    }
-     m_Winch.set(0);
-    }
+    public void winchAuton(boolean down, long lifttime) {
 
-    if (down == true) {
-      long targettime = System.currentTimeMillis() +  lifttime;
-    while(System.currentTimeMillis() < targettime) {
-     m_Winch.set(-1);
-    }
-     m_Winch.set(0);
-    }
+      if (down == false) {
+        long targettime = System.currentTimeMillis() + lifttime;
+        while (System.currentTimeMillis() < targettime) {
+          if (limitSwitch0.get()) {
+            break;
+          }
+          m_Winch.set(1);
+        }
+        m_Winch.set(0);
+      }
+
+      if (down == true) {
+        long targettime = System.currentTimeMillis() + lifttime;
+        while (System.currentTimeMillis() < targettime) {
+          if (limitSwitch1.get()) {
+            break;
+          }
+          m_Winch.set(-1);
+        }
+        m_Winch.set(0);
+      }
     }
 
     // Use joystick for arm

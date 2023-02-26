@@ -18,24 +18,49 @@ public class Scissor extends SubsystemBase {
     public Scissor() {
 
     }
-    public void ScissorAuton (boolean extention, long extentiontime) {
-    
-    if (extention == true) {
-        long targettime = System.currentTimeMillis() +  extentiontime;
-        while(System.currentTimeMillis() < targettime) {
-            m_Scissor.set(.3);
+
+    public void ScissorAuton(boolean extention, long extentiontime) {
+
+        if (extention == true) {
+            long targettime = System.currentTimeMillis() + extentiontime;
+            while (System.currentTimeMillis() < targettime) {
+                if (limitSwitch3.get()) {
+                    break;
+                }
+                m_Scissor.set(-.3);
+            }
+            m_Scissor.set(0);
         }
-        m_Scissor.set(0);}
-        
-    if (extention == false) {        long targettime = System.currentTimeMillis() +  extentiontime;
-        while(System.currentTimeMillis() < targettime) {
-            m_Scissor.set(-.3);
+
+        if (extention == false) {
+            long targettime = System.currentTimeMillis() + extentiontime;
+            while (System.currentTimeMillis() < targettime) {
+                if (limitSwitch2.get()) {
+                    break;
+                }
+                m_Scissor.set(.3);
+            }
+            m_Scissor.set(0);
         }
-        m_Scissor.set(0);}
     }
+
     // Use xbox controller's right stick to move scissor
     public void ScissorMovement(XboxController xController) {
-        m_Scissor.set(xController.getRightX() * -.3); //This was Malcolm & Jimmy testing how to slow things. Don't Delete this (*1f)
-    
+
+        if (xController.getRightX() >= 0) {
+            if (limitSwitch3.get()) {
+                m_Scissor.set(0);
+            } else {
+                m_Scissor.set(xController.getRightX() * -.35); // This was Malcolm & Jimmy testing how to slow things.
+                                                              // Don't Delete this (*1f)
+            }
+        } else {
+            if (limitSwitch2.get()) {
+                m_Scissor.set(0);
+            } else {
+                m_Scissor.set(xController.getRightX() * -.35); // This was Malcolm & Jimmy testing how to slow things.
+                                                              // Don't Delete this (*1f)
+            }
+        }
     }
 }

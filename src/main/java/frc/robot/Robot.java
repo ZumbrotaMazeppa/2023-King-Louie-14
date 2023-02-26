@@ -12,6 +12,8 @@ import frc.robot.subsystems.Scissor;
 import frc.robot.subsystems.Winch;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -32,7 +34,8 @@ public class Robot extends TimedRobot {
   private final Grippy m_grip = new Grippy();
 
   UsbCamera camera1;
-
+  UsbCamera camera2;
+  NetworkTableEntry cameraSelection;
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -43,8 +46,13 @@ public class Robot extends TimedRobot {
     m_driveTrain.initDrive();
 
     camera1 = CameraServer.startAutomaticCapture(0);
+    camera2 = CameraServer.startAutomaticCapture(1);
+
+    cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     camera1.setResolution(320, 240);
     camera1.setFPS(15);
+    camera2.setResolution(320, 240);
+    camera2.setFPS(15);
   }
 
   /**
@@ -83,21 +91,19 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_driveTrain.autonInit();
     m_driveTrain.driveAuton();
+    /*
     m_winch.winchAuton(false, 1000);
     m_scissor.ScissorAuton(true, 1500);
     m_grip.objectdropauton();
     m_scissor.ScissorAuton(false, 1500);
     m_winch.winchAuton(true, 1000);
-    // Set encoders to 0
-    // turn for 1000 millis
-    // print rotations of all motors
+    */
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
     // Probably want to calculate and perform movements here
-    // m_driveTrain.driveAuton();
   }
 
   /** This function is called once when teleop is enabled. */
