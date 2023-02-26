@@ -88,8 +88,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void TurnWithDegrees(double numberofdegrees) {
-    autonInit();
-    m_drive.arcadeDrive(0, .4);
+    resetEncoders();
 
     RelativeEncoder encoder = m_rearLeft.getEncoder();
     encoder.getPosition();
@@ -103,12 +102,12 @@ public class DriveTrain extends SubsystemBase {
     encoder = m_frontLeft.getEncoder();
     encoder.getPosition();
 
-    double turnSpeed = 0.4;
+    double turnSpeed = 0.35;
     if (numberofdegrees < 0) {
       turnSpeed = -turnSpeed;
     }
 
-    while (Math.abs(encoder.getPosition() * 2.25) < Math.abs(numberofdegrees)) {
+    while (Math.abs(encoder.getPosition() * 11.95) < Math.abs(numberofdegrees)) {
       m_drive.arcadeDrive(0, turnSpeed);
     }
 
@@ -117,8 +116,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void DrivewithFeet(double numberoffeet) {
-    autonInit();
-    m_drive.arcadeDrive(0.5, 0);
+    resetEncoders();
 
     RelativeEncoder encoder = m_rearLeft.getEncoder();
     encoder.getPosition();
@@ -132,12 +130,12 @@ public class DriveTrain extends SubsystemBase {
     encoder = m_frontLeft.getEncoder();
     encoder.getPosition();
 
-    double movementspeed = 0.5;
+    double movementspeed = 0.4;
     if (numberoffeet < 0) {
       movementspeed = -movementspeed;
     }
 
-    while (Math.abs(encoder.getPosition()) < Math.abs(numberoffeet)) {
+    while (Math.abs(encoder.getPosition() * 0.3) < Math.abs(numberoffeet)) {
       m_drive.arcadeDrive(movementspeed, 0);
     }
 
@@ -222,6 +220,13 @@ public class DriveTrain extends SubsystemBase {
       m_drive.arcadeDrive(speed * -0.5, joystick.getTwist() * -0.4);
     } else { // Put throttle lever down to use new method
       m_drive.arcadeDrive(currentThrottle * -0.5, joystick.getTwist() * -0.4);
+    }
+
+    // Fine tune turning
+    if(joystick.getPOV() < 95 && joystick.getPOV() > 85) {
+      m_drive.arcadeDrive(0, -0.25);
+    } else if (joystick.getPOV() < 275 && joystick.getPOV() > 265){
+      m_drive.arcadeDrive(0, 0.25);
     }
   }
 }

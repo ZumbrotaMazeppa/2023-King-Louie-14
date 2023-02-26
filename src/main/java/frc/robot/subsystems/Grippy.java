@@ -42,7 +42,7 @@ public class Grippy extends SubsystemBase {
         grippysDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
         } catch (Exception e) {
         }
 

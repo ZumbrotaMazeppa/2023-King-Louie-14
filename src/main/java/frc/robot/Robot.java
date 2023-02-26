@@ -90,11 +90,20 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_driveTrain.autonInit();
-    m_driveTrain.driveAuton();
-    /*
-    m_winch.winchAuton(false, 1000);
-    m_scissor.ScissorAuton(true, 1500);
+    m_driveTrain.DrivewithFeet(3);
+    m_winch.winchAuton(false, 7000);
+    m_scissor.ScissorAuton(true, 7000);
     m_grip.objectdropauton();
+    m_scissor.ScissorAuton(false, 7000);
+    m_winch.winchAuton(true, 7000);
+    m_driveTrain.DrivewithFeet(-3);
+    m_driveTrain.TurnWithDegrees(180);
+    //m_driveTrain.TurnWithDegrees(180);
+    //m_driveTrain.driveAuton();
+    /*
+    
+    
+    
     m_scissor.ScissorAuton(false, 1500);
     m_winch.winchAuton(true, 1000);
     */
