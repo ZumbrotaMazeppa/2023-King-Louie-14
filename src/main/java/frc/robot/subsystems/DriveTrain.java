@@ -107,6 +107,8 @@ public class DriveTrain extends SubsystemBase {
       turnSpeed = -turnSpeed;
     }
 
+    // If it under shoots, set decimal number higher
+    // 11.95 is what we tested at on tile floor
     while (Math.abs(encoder.getPosition() * 11.95) < Math.abs(numberofdegrees)) {
       m_drive.arcadeDrive(0, turnSpeed);
     }
@@ -135,6 +137,8 @@ public class DriveTrain extends SubsystemBase {
       movementspeed = -movementspeed;
     }
 
+    // If it under shoots distance, set decimal number higher
+    // 0.3 is what we tested at on tile floor
     while (Math.abs(encoder.getPosition() * 0.3) < Math.abs(numberoffeet)) {
       m_drive.arcadeDrive(movementspeed, 0);
     }
