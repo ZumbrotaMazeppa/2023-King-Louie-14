@@ -233,4 +233,30 @@ public class DriveTrain extends SubsystemBase {
       m_drive.arcadeDrive(0, 0.25);
     }
   }
+
+  public double turn(boolean left) {
+    double turnSpeed = 0.35;
+    if (!left) {
+      turnSpeed = -turnSpeed;
+    }
+
+    m_drive.arcadeDrive(0, turnSpeed);
+
+    printEncoders();
+    RelativeEncoder encoder = m_frontLeft.getEncoder();
+    return encoder.getPosition();
+  }
+
+  public double moveForward(boolean forward) {
+    double movementspeed = forward ? 0.4 : -0.4;
+
+    m_drive.arcadeDrive(movementspeed, 0);
+
+    printEncoders();
+    RelativeEncoder encoder = m_frontLeft.getEncoder();
+    return encoder.getPosition();
+  }
+  public void stop() {
+    m_drive.arcadeDrive(0, 0);
+  }
 }

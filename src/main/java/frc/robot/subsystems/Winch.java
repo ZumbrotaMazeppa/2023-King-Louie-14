@@ -63,4 +63,24 @@ public class Winch extends SubsystemBase {
         }
       }
     }
+
+    public void move(boolean down) {
+      if (down) {
+        if (limitSwitch1.get()) {
+          stop();
+        } else {
+          m_Winch.set(-1);
+        }
+      } else {
+        if (limitSwitch0.get()) {
+          stop();
+        } else {
+          m_Winch.set(1);
+        }
+      }
+    }
+
+    public void stop() {
+      m_Winch.set(0);
+    }
 }

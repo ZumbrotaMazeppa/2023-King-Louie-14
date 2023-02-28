@@ -6,10 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Grippy;
-import frc.robot.subsystems.Scissor;
-import frc.robot.subsystems.Winch;
+import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.*;
+import frc.robot.auton.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -87,38 +92,54 @@ public class Robot extends TimedRobot {
    * them to the
    * chooser code above as well.
    */
+
+  private List<Task> taskList;
+
   @Override
   public void autonomousInit() {
     m_driveTrain.autonInit();
-    m_driveTrain.DrivewithFeet(3);
-    m_winch.winchAuton(false, 7000);
-    m_scissor.ScissorAuton(true, 7000);
-    m_grip.objectdropauton();
-    m_scissor.ScissorAuton(false, 7000);
-    m_winch.winchAuton(true, 7000);
-    m_driveTrain.DrivewithFeet(-3);
-    m_driveTrain.TurnWithDegrees(180);
-    //m_driveTrain.TurnWithDegrees(180);
-    //m_driveTrain.driveAuton();
-    /*
-    
-    
-    
-    m_scissor.ScissorAuton(false, 1500);
-    m_winch.winchAuton(true, 1000);
-    */
+    m_winch.stop();
+    m_scissor.stop();
+
+    taskList = new ArrayList<Task>();
+
+    taskList.add(new DriveStraightTask(m_driveTrain, 3));
+    taskList.add(new WaitTask(500));
+    taskList.add(new PositionArmTask(m_winch, m_scissor, true));
+    taskList.add(new WaitTask(100));
+    taskList.add(new DropObject(m_grip));
+    taskList.add(new WaitTask(100));
+    taskList.add(new PositionArmTask(m_winch, m_scissor, false));
+    taskList.add(new WaitTask(1000));
+
+    // Maybe just delete these -- turning doesn't always seem to work
+    taskList.add(new DriveTurnTask(m_driveTrain, 180));
+    taskList.add(new WaitTask(1000));
+    taskList.add(new DriveStraightTask(m_driveTrain, 3));
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    // Probably want to calculate and perform movements here
+    if (taskList.size() > 0) {
+      Task t = taskList.get(0);
+      if (!t.isInitialized()) {
+        t.init();
+      } else if (!t.isComplete()) {
+        t.execute();
+      } else {
+        t.done();
+        taskList.remove(0);
+      }
+    }
   }
 
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
     m_driveTrain.initDrive();
+    m_winch.stop();
+    m_scissor.stop();
   }
 
   /** This function is called periodically during operator control. */

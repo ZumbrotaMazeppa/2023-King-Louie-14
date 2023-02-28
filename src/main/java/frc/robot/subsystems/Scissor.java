@@ -63,4 +63,23 @@ public class Scissor extends SubsystemBase {
             }
         }
     }
+
+    public void move(boolean extend) {
+        if (extend) {
+            if (limitSwitch3.get()) {
+              stop();
+            } else {
+              m_Scissor.set(-0.3);
+            }
+          } else {
+            if (limitSwitch2.get()) {
+              stop();
+            } else {
+              m_Scissor.set(0.3);
+            }
+          }
+    }
+    public void stop() {
+        m_Scissor.set(0);
+    }
 }

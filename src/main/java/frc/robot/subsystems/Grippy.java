@@ -38,14 +38,15 @@ public class Grippy extends SubsystemBase {
         }
     }
 
-    public void objectdropauton() {
+    public void open() {
         grippysDoubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
 
-        try {
-            Thread.sleep(3000);
-        } catch (Exception e) {
-        }
-
+    public void close() {
         grippysDoubleSolenoid.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void off() {
+        grippysDoubleSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 }
