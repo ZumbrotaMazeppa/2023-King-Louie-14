@@ -22,7 +22,7 @@ public class DropObject extends Task {
             startTime = now;
         }
 
-        if (now - startTime >= 2000) {
+        if (now - startTime >= 1000) {
             m_Grippy.close();
             completed = true;
         } else {

@@ -13,24 +13,18 @@ public class PositionArmTask extends Task {
     private long msMoveScissor;
     private long startTime;
 
-    public PositionArmTask(Winch winch, Scissor scissor, boolean extend) {
-        m_Winch = winch;
+    public PositionArmTask(Scissor scissor, boolean extend) {
         m_Scissor = scissor;
         this.extend = extend;
     }
 
     public void init(){
-        m_Winch.stop();
+        
         m_Scissor.stop();
 
-        if (extend) {
-            msMoveWinch = 10000;
-        } else {
-            // going down is easier 
-            msMoveWinch = 9000;
-        }
+       
 
-        msMoveScissor = 9000;
+        msMoveScissor = 750;
         initialized = true;
     }
 
@@ -42,12 +36,7 @@ public class PositionArmTask extends Task {
             startTime = now;
         }
 
-        if (now - startTime < msMoveWinch) {
-            m_Winch.move(!extend);
-        } else {
-            m_Winch.stop();
-            completed = true;
-        }
+
         
         if (now - startTime < msMoveScissor) {
             m_Scissor.move(extend);
@@ -57,7 +46,7 @@ public class PositionArmTask extends Task {
     } 
 
     public void done(){
-        m_Winch.stop();
+       
         m_Scissor.stop();
     }
 }

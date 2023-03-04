@@ -51,14 +51,14 @@ public class Scissor extends SubsystemBase {
             if (limitSwitch3.get()) {
                 m_Scissor.set(0);
             } else {
-                m_Scissor.set(xController.getRightX() * -.35); // This was Malcolm & Jimmy testing how to slow things.
+                m_Scissor.set(xController.getRightX() * -1); // This was Malcolm & Jimmy testing how to slow things.
                                                               // Don't Delete this (*1f)
             }
         } else {
             if (limitSwitch2.get()) {
                 m_Scissor.set(0);
             } else {
-                m_Scissor.set(xController.getRightX() * -.35); // This was Malcolm & Jimmy testing how to slow things.
+                m_Scissor.set(xController.getRightX() * -1); // This was Malcolm & Jimmy testing how to slow things.
                                                               // Don't Delete this (*1f)
             }
         }
@@ -69,13 +69,13 @@ public class Scissor extends SubsystemBase {
             if (limitSwitch3.get()) {
               stop();
             } else {
-              m_Scissor.set(-0.3);
+              m_Scissor.set(-1);
             }
           } else {
             if (limitSwitch2.get()) {
               stop();
             } else {
-              m_Scissor.set(0.3);
+              m_Scissor.set(1);
             }
           }
     }

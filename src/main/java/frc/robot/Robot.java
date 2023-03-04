@@ -15,6 +15,8 @@ import frc.robot.auton.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opencv.objdetect.FaceDetectorYN;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -104,18 +106,11 @@ public class Robot extends TimedRobot {
     taskList = new ArrayList<Task>();
 
     taskList.add(new DriveStraightTask(m_driveTrain, 3));
-    taskList.add(new WaitTask(500));
-    taskList.add(new PositionArmTask(m_winch, m_scissor, true));
-    taskList.add(new WaitTask(100));
-    taskList.add(new DropObject(m_grip));
-    taskList.add(new WaitTask(100));
-    taskList.add(new PositionArmTask(m_winch, m_scissor, false));
-    taskList.add(new WaitTask(1000));
-
-    // Maybe just delete these -- turning doesn't always seem to work
-    taskList.add(new DriveTurnTask(m_driveTrain, 180));
-    taskList.add(new WaitTask(1000));
-    taskList.add(new DriveStraightTask(m_driveTrain, 3));
+    taskList.add(new WaitTask(250));
+    taskList.add(new PositionArmTask(m_scissor, true));
+    taskList.add(new WaitTask(250));
+    taskList.add(new DriveStraightTask(m_driveTrain, 9));
+    
   }
 
   /** This function is called periodically during autonomous. */

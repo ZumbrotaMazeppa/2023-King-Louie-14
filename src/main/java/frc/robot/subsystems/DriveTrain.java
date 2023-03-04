@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveTrain extends SubsystemBase {
 
+
+
   CANSparkMax m_rearRight = new CANSparkMax(1, MotorType.kBrushless);
   CANSparkMax m_frontRight = new CANSparkMax(2, MotorType.kBrushless);
   MotorControllerGroup m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
@@ -25,6 +29,7 @@ public class DriveTrain extends SubsystemBase {
   MotorControllerGroup m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
 
   DifferentialDrive m_drive = new DifferentialDrive(m_left, m_right);
+
 
   double speed = 0;
   double oldDesired = 0;
@@ -80,7 +85,7 @@ public class DriveTrain extends SubsystemBase {
       speed = speed * .99;
     }
 
-    m_drive.arcadeDrive(-joystick.getY() * 0.5, joystick.getTwist() * 0.4);
+    m_drive.arcadeDrive(-joystick.getY() * 1, joystick.getTwist() * 0.7);
   }
 
   public void autonInit() {
